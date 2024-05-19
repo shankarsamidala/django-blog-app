@@ -1,0 +1,26 @@
+version: '3.9'
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
+services:
+  api-local:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: reinit:api
+    container_name: reinit-blocal
+    restart: unless-stopped
+    command:
+      [
+        "python",
+        "manage.py",
+        "runserver",
+        "0.0.0.0:8000"
+      ]
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app # Mount a volume named 'api-data' to store persistent data
